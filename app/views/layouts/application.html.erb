@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>OnayamiApp</title>
+    <title>MoreHelp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,12 @@
   </head>
 
   <body>
-    <%= yield %>
+  <%= render 'layouts/header' %>
+    <div class="container-fluid py-4 <%= devise_controller? ? 'mw-md' : 'mw-xl' %>">
+      <%= yield %>
+    </div>
+    <script>
+      const click = document.getElementById('#Click');
+    </script>
   </body>
 </html>
