@@ -11,5 +11,6 @@ devise_scope :user do
   get '/users/password', to: 'users/passwords#new'
 end
 get "users/show" => "users#show"
+resources :troubles
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
