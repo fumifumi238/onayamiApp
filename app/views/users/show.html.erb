@@ -1,8 +1,15 @@
-<h1>about me</h1>
+<div class="text-center">
+  <h1>about me</h1>
 
 <h3>ユーザー名</h3>
 <%= @user.name %>
 <h3>メールアドレス</h3>
 <%= @user.email %>
-
  <%= link_to 'アカウント編集', edit_user_registration_path, class: 'nav-link' %>
+<h1>自分の投稿</h1>
+<% @microposts.each do |micropost|%>
+<div>
+<%= link_to micropost.content,micropost %>
+</div>
+<% end %>
+</div>

@@ -1,5 +1,10 @@
-<h1>Microposts#index</h1>
-<p>Find me in app/views/microposts/index.html.erb</p>
+
+<%= render 'layouts/flash_messages' %>
 <% @microposts.each do |micropost| %>
-<%= micropost.content %>
+<% if micropost.anonymous? %>
+  <p>匿名希望　さん</p>
+<% else %>
+  <p><%= micropost.user.name %>　さん</p>
+<% end %>
+<%= link_to micropost.content,micropost %></br>
 <% end %>

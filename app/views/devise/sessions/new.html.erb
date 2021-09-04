@@ -1,4 +1,4 @@
-<h1><%= t('.sign_in') %></h1>
+<h1 class="text-center"><%= t('.sign_in') %></h1>
 <%= render 'layouts/flash_messages' %>
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-group">
@@ -20,9 +20,8 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.submit  t('.sign_in'), class: 'btn btn-primary' %>
+  <div class="form-group ">
+    <%= f.submit  t('.sign_in'), class: 'btn btn-primary btn-block' %>
   </div>
 <% end %>
-
 <%= render 'devise/shared/links' %>
