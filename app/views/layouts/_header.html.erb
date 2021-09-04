@@ -7,6 +7,11 @@
           <li>
             <%= link_to current_user.name, users_show_path, class: 'nav-link' %>
           </li>
+
+          <li>
+            <%= link_to '新規投稿', new_micropost_path, class: 'nav-link' %>
+          </li>
+
           <li>
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: 'nav-link' %>
           </li>

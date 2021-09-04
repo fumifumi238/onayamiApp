@@ -1,0 +1,8 @@
+<h1>Microposts#show</h1>
+<p>Find me in app/views/microposts/show.html.erb</p>
+<%= @micropost.content %></br>
+<% if user_signed_in? && @micropost.user_id == current_user.id %>
+  <%= link_to "編集する",edit_micropost_path %>
+  <%= link_to "削除する", @micropost, method: :delete,
+                                  data: { confirm: "本当に削除しますか?" } %>
+<% end %>
