@@ -8,7 +8,7 @@
 export default {
   data: function () {
     return {
-      message: "Hello Vue!"
+      message: count,
     }
   }
 }
@@ -16,6 +16,7 @@ export default {
 
 <style scoped>
 p {
+  color: red;
   font-size: 2em;
   text-align: center;
 }
