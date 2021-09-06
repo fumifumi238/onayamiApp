@@ -2,6 +2,7 @@ class MicropostsController < ApplicationController
 before_action :authenticate_user!,except: [:index,:show]
   def index
     @microposts = Micropost.all
+    # render json: @microposts, status: 422
   end
 
   def new
