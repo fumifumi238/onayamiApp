@@ -20,6 +20,7 @@
   "version": "0.1.0",
   "devDependencies": {
     "@webpack-cli/serve": "^1.5.2",
+    "axios": "^0.21.3",
     "webpack-dev-server": "^4.1.0"
   }
 }

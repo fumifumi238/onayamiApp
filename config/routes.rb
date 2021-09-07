@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      get 'integer_literal_descriptions/index'
+    end
+  end
+  get 'integer_literal_descriptions/index'
 root 'microposts#index'
   devise_for :users, controllers: {
         sessions: 'users/sessions',
