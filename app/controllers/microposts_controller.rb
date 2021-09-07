@@ -21,6 +21,9 @@ before_action :authenticate_user!,except: [:index,:show]
 
   def show
     @micropost = Micropost.find(params[:id])
+    @comments = @micropost.comments
+    @comment = Comment.new
+     debugger
   end
 
   def edit

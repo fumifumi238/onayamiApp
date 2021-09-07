@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_04_122302) do
+ActiveRecord::Schema.define(version: 2021_09_07_144442) do
+
+  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "micropost_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["micropost_id"], name: "index_comments_on_micropost_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "microposts", charset: "utf8mb4", force: :cascade do |t|
     t.text "content"
@@ -44,6 +54,8 @@ ActiveRecord::Schema.define(version: 2021_09_04_122302) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "comments", "microposts"
+  add_foreign_key "comments", "users"
   add_foreign_key "microposts", "users"
   add_foreign_key "troubles", "users"
 end

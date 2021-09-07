@@ -1,8 +1,44 @@
 <h1>Microposts#show</h1>
 <p>Find me in app/views/microposts/show.html.erb</p>
+<%= render 'layouts/flash_messages' %>
 <%= @micropost.content %></br>
 <% if user_signed_in? && @micropost.user_id == current_user.id %>
-  <%= link_to "編集する",edit_micropost_path %>
+  <%= link_to "編集する",edit_micropost_path(@micropost) %>
   <%= link_to "削除する", @micropost, method: :delete,
                                   data: { confirm: "本当に削除しますか?" } %>
+<% end %>
+
+<% if user_signed_in? %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model:[@micropost, @comment], method: :post) do |f| %>
+  <div class="form-group">
+      <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
+  </div>
+
+  <div class="form-group">
+      <%= f.hidden_field :micropost_id, value: @micropost.id %></br>
+  </div>
+
+  <%= f.submit "コメントする", class: "btn btn-primary" %>
+    <% end %>
+
+<% else %>
+    <p>コメントするにはログインしてください</p>
+<% end %>
+
+
+<h2>コメント一覧</h2>
+<% if @comments.length == 0%>
+  <p>コメントはまだありません</p>
+<% end %>
+<% @comments.each do |comment|%>
+
+<% if comment.user_id == @micropost.user_id && @micropost.anonymous? %>
+  匿名希望さん
+<% else%>
+  <%= comment.user.name %>
+<% end %>
+
+  <%= comment.content %></br>
 <% end %>

@@ -35,7 +35,8 @@ gem 'mini_magick',                '4.9.5'
 gem 'aws-sdk-s3',                 '1.46.0', require: false
 # ログイン機能
 gem 'devise'
-
+# NGワード
+gem 'obscenity'
 # 日本語化
 gem 'rails-i18n', '~> 6.0'
 gem 'devise-i18n'
