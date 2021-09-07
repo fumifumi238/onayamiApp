@@ -21,13 +21,13 @@ WORKDIR /onayami_app
 
 # ホストのGemfileとGemfile.lockをコンテナにコピー
 ADD Gemfile /onayami_app/Gemfile
-ADD Gemfile.lock /webapp/Gemfile.lock
+ADD Gemfile.lock /onayami_app/Gemfile.lock
 
 # bundle installの実行
 RUN bundle install
 
 # ホストのアプリケーションディレクトリ内をすべてコンテナにコピー
-ADD . /webapp
+ADD . /onayami_app
 
 # puma.sockを配置するディレクトリを作成
 RUN mkdir -p tmp/sockets
