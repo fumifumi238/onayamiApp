@@ -8,7 +8,6 @@ class CommentsController < ApplicationController
       flash[:success] = "コメントしました"
       redirect_to micropost_path(@micropost)
     else
-      flash.now[:danger] = "コメントできませんでした"
       render 'microposts/show'
     end
   end

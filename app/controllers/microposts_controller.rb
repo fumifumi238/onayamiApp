@@ -6,6 +6,7 @@ before_action :authenticate_user!,except: [:index,:show]
   end
 
   def new
+    @micropost = current_user.microposts.build
   end
 
   def create
@@ -36,7 +37,6 @@ before_action :authenticate_user!,except: [:index,:show]
       flash[:success] = "投稿が編集されました"
       redirect_to root_path
     else
-      flash.now[:danger] = "編集できませんでした"
       render 'edit'
     end
   end
@@ -52,7 +52,7 @@ before_action :authenticate_user!,except: [:index,:show]
 private
 
   def micropost_params
-    params.permit(:content,:anonymous)
+    params.require(:micropost).permit(:content,:anonymous)
   end
 
 end
