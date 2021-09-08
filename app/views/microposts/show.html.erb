@@ -1,5 +1,4 @@
-<h1>Microposts#show</h1>
-<p>Find me in app/views/microposts/show.html.erb</p>
+
 <%= render 'layouts/flash_messages' %>
 <%= @micropost.content %></br>
 <% if user_signed_in? && @micropost.user_id == current_user.id %>
@@ -12,6 +11,7 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= form_with(model:[@micropost, @comment], method: :post) do |f| %>
+    <%= render 'layouts/error_messages', object: f.object %>
   <div class="form-group">
       <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
   </div>

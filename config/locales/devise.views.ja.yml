@@ -1,6 +1,14 @@
 ja:
   activerecord:
     attributes:
+      comment:
+        content: コメント
+        contain_blacklist_words: 使用できない単語が含まれています
+        contain_invalid_regex: 不正な文字列
+      micropost:
+        content: 内容
+        contain_blacklist_words: 使用できない単語が含まれています
+        contain_invalid_regex: 不正な文字列
       user:
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
