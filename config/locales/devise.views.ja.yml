@@ -3,13 +3,16 @@ ja:
     attributes:
       comment:
         content: コメント
-        contain_blacklist_words: 使用できない単語が含まれています
-        contain_invalid_regex: 不正な文字列
+        contain_blacklist_words: 不適切な言葉が含まれています
+        contain_invalid_regex: url,htmlタグ,5文字以上の連続した単語は使えません
       micropost:
         content: 内容
-        contain_blacklist_words: 使用できない単語が含まれています
-        contain_invalid_regex: 不正な文字列
+        contain_blacklist_words: 不適切な言葉が含まれています
+        contain_invalid_regex: url,htmlタグ,5文字以上の連続した単語は使えません
       user:
+        name: 名前
+        contain_blacklist_words: 不適切な言葉が含まれています
+        contain_invalid_regex: 名前に5文字以上の連続した単語は使えません
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
         confirmed_at: パスワード確認時刻
