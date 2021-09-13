@@ -5,6 +5,5 @@ class Micropost < ApplicationRecord
   validates :user_id, presence: true
   validates :content, presence: true,invalid_words: true,length: { maximum: 1000}
   has_many :comments, dependent: :destroy
-  # validate :content_cannot_contain_blacklist_words
-  # validate :content_cannot_contain_invalid_regex
+  has_many :likes
 end

@@ -13,8 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+@import '@fortawesome/fontawesome-free/scss/fontawesome';
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
 
 body {
   padding-top: 60px;
@@ -55,4 +59,12 @@ li{
     color: white;
     text-decoration: none;
   }
+}
+
+.like-btn{
+  color:#c6c6c6;
+}
+
+.liked-btn{
+  color: #FF0000;
 }
