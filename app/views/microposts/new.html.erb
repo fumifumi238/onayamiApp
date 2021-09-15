@@ -11,6 +11,11 @@
   </div>
 
   <div class="form-group">
+      <%= f.label :tag_ids %>
+      <%= f.text_field :tag_ids, class: "form-control", id:'tag_ids', placeholder: "タグは「,」で区切ってください" %>
+  </div>
+
+  <div class="form-group">
         <%= f.label :anonymous, class: "checkbox inline" do %>
         <%= f.check_box :anonymous %>
         <span>匿名で投稿する場合は、ここにチェックを入れてください</span>

@@ -14,7 +14,7 @@ class InvalidWordsValidator < ActiveModel::EachValidator
     if value.present? && invalid_regex.any?{|invalid_key,invalid_value| invalid_value.match?(value)}
       record.errors.add(:contain_invalid_regex, '')
     end
-    
+
   end
 
 end

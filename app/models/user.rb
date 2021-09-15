@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :name,invalid_words: true, presence: true, length: { maximum: 20 }
   has_many :microposts, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :micropost
   has_many :comments
 
   def already_liked?(micropost)

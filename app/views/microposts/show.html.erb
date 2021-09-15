@@ -1,6 +1,10 @@
 
 <%= render 'layouts/flash_messages' %>
-<%= @micropost.content %></br>
+<%=safe_join(@micropost.content.split("\n"),tag(:br))%></br>
+タグ:
+<% @micropost.tags.each do |tag| %>
+  <%= link_to tag.name, tagname_path(tag.name),class:"badge bg-primary" %>
+<% end %>
 いいね数:<%= @micropost.likes.count%>
 <% if user_signed_in? && @micropost.user_id == current_user.id %>
   <%= link_to "編集する",edit_micropost_path(@micropost) %>
@@ -12,11 +16,11 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
   <% if current_user.already_liked?(@micropost) %>
-       <%= link_to micropost_likes_path(@micropost), method: :delete do %>
+       <%= link_to micropost_likes_path(@micropost), remote: true,method: :delete do %>
          <i class="fas fa-heart liked-btn"></i>
        <% end %>
   <% else %>
-      <%= link_to micropost_likes_path(@micropost),method: :POST do %>
+      <%= link_to micropost_likes_path(@micropost), remote: true ,method: :POST do %>
         <i class="far fa-heart like-btn"></i>
       <% end %>
   <% end %>
