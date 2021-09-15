@@ -6,5 +6,5 @@
 <% else %>
   <p><%= micropost.user.name %>　さん</p>
 <% end %>
-<%= link_to micropost.content,micropost %></br>
+<%= link_to micropost.content,micropost %> いいね数 : <%= micropost.likes.count %></p></br>
 <% end %>

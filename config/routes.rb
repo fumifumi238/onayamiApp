@@ -15,7 +15,7 @@ get 'users/show', to: 'users#show'
 get 'pages/home', to: 'pages#home'
 resources :microposts do
   resources :comments, only: [:create]
-  resources :likes, only: [:create, :destroy]
+  resource :likes, only: [:create, :destroy]
 end
 get 'microposts/:id/comments', to: 'microposts#show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
