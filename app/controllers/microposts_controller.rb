@@ -1,5 +1,5 @@
 class MicropostsController < ApplicationController
-before_action :authenticate_user!,except: [:index,:show]
+before_action :authenticate_user!,except: [:index,:show,:tagname]
   def index
     @microposts = Micropost.all
     # render json: @microposts, status: 422
@@ -11,7 +11,8 @@ before_action :authenticate_user!,except: [:index,:show]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
-    if @micropost.save
+    tag_list = params[:micropost][:tag_ids].split(',').uniq
+    if @micropost.save && @micropost.save_tags(tag_list)
       flash[:success] = "投稿が完了しました"
       redirect_to microposts_path
     else
@@ -29,11 +30,13 @@ before_action :authenticate_user!,except: [:index,:show]
 
   def edit
     @micropost = Micropost.find(params[:id])
+    @tag_list =@micropost.tags.pluck(:name).join(",")
   end
 
   def update
     @micropost = Micropost.find(params[:id])
-    if @micropost.update(micropost_params)
+    tag_list = params[:micropost][:tag_ids].split(',').uniq
+    if @micropost.update(micropost_params) &&  @micropost.save_tags(tag_list)
       flash[:success] = "投稿が編集されました"
       redirect_to root_path
     else
@@ -46,6 +49,11 @@ before_action :authenticate_user!,except: [:index,:show]
     @micropost.destroy
     flash[:success] = "投稿が削除されました"
     redirect_to root_path
+  end
+
+  def tagname
+    @tag = Tag.find_by(name: params[:tagname])
+    @microposts = @tag.microposts
   end
 
 

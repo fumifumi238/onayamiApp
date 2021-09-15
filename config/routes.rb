@@ -18,5 +18,6 @@ resources :microposts do
   resource :likes, only: [:create, :destroy]
 end
 get 'microposts/:id/comments', to: 'microposts#show'
+get 'microposts/tag/:tagname', to: 'microposts#tagname', as: 'tagname'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

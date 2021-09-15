@@ -7,6 +7,7 @@ ja:
         contain_invalid_regex: url,htmlタグ,5文字以上の連続した単語は使えません
       micropost:
         content: 内容
+        tag_ids: タグ
         contain_blacklist_words: 不適切な言葉が含まれています
         contain_invalid_regex: url,htmlタグ,5文字以上の連続した単語は使えません
       user:
