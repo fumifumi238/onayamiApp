@@ -51,11 +51,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  def after_sign_up_path_for(resource)
+  def after_sign_up_path_for(_resource)
     if current_user.admin?
-       users_index_path
+      users_index_path
     else
-       users_show_path(current_user)
+      users_show_path(current_user)
     end
   end
 

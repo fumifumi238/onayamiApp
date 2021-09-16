@@ -7,22 +7,21 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # メインのサンプルユーザーを1人作成する
-User.create!(name:  "sampleapp",
-             email: "sample@gmail.com",
-             password:              "sampleapp",
-             password_confirmation: "sampleapp",
-            admin: true)
+User.create!(name: 'sampleapp',
+             email: 'sample@gmail.com',
+             password: 'sampleapp',
+             password_confirmation: 'sampleapp',
+             admin: true)
 
 # 追加のユーザーをまとめて生成する
 10.times do |n|
   name  = Faker::Name.name
-  email = "example-#{n+1}@railstutorial.org"
-  password = "password"
-  User.create!(name:  name,
-              email: email,
-              password:              password,
-              password_confirmation: password)
-
+  email = "example-#{n + 1}@railstutorial.org"
+  password = 'password'
+  User.create!(name: name,
+               email: email,
+               password: password,
+               password_confirmation: password)
 end
 
 # ユーザーの一部を対象にマイクロポストを生成する
