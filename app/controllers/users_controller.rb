@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
-before_action :authenticate_user!
-before_action :admin_user,     only: [:index,:destroy]
-
+  before_action :authenticate_user!
+  before_action :admin_user, only: %i[index destroy]
 
   def index
     @users = User.all
@@ -13,7 +12,8 @@ before_action :admin_user,     only: [:index,:destroy]
     @likes = @user.liked_posts
   end
 
-private
+  private
+
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end

@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
-before_action :authenticate_user!,except: [:index,:show,:tagname]
-before_action :correct_user,only: [:edit,:update,:destroy]
+  before_action :authenticate_user!, except: %i[index show tagname]
+  before_action :correct_user, only: %i[edit update destroy]
 
   def index
     @microposts = Micropost.all
@@ -15,10 +15,10 @@ before_action :correct_user,only: [:edit,:update,:destroy]
     @micropost = current_user.microposts.build(micropost_params)
     tag_list = params[:micropost][:tag_ids].split(',').uniq
     if @micropost.save && @micropost.save_tags(tag_list)
-      flash[:success] = "投稿が完了しました"
+      flash[:success] = '投稿が完了しました'
       redirect_to microposts_path
     else
-      flash.now[:danger] = "投稿に失敗しました"
+      flash.now[:danger] = '投稿に失敗しました'
       render 'new'
     end
   end
@@ -32,14 +32,14 @@ before_action :correct_user,only: [:edit,:update,:destroy]
 
   def edit
     @micropost = Micropost.find(params[:id])
-    @tag_list =@micropost.tags.pluck(:name).join(",")
+    @tag_list = @micropost.tags.pluck(:name).join(',')
   end
 
   def update
     @micropost = Micropost.find(params[:id])
     tag_list = params[:micropost][:tag_ids].split(',').uniq
-    if @micropost.update(micropost_params) &&  @micropost.save_tags(tag_list)
-      flash[:success] = "投稿が編集されました"
+    if @micropost.update(micropost_params) && @micropost.save_tags(tag_list)
+      flash[:success] = '投稿が編集されました'
       redirect_to root_path
     else
       render 'edit'
@@ -50,7 +50,7 @@ before_action :correct_user,only: [:edit,:update,:destroy]
     @micropost = Micropost.find(params[:id])
     @user = @micropost.user
     @micropost.destroy
-    flash[:success] = "投稿が削除されました"
+    flash[:success] = '投稿が削除されました'
     redirect_to users_show_path(@user)
   end
 
@@ -59,16 +59,14 @@ before_action :correct_user,only: [:edit,:update,:destroy]
     @microposts = @tag.microposts
   end
 
+  private
 
-private
+    def micropost_params
+      params.require(:micropost).permit(:content, :anonymous)
+    end
 
-  def micropost_params
-    params.require(:micropost).permit(:content,:anonymous)
-  end
-
-  def correct_user
-    @micropost = Micropost.find(params[:id])
-    redirect_to root_path if @micropost.user_id != current_user.id && !current_user.admin?
-  end
-
+    def correct_user
+      @micropost = Micropost.find(params[:id])
+      redirect_to root_path if @micropost.user_id != current_user.id && !current_user.admin?
+    end
 end
