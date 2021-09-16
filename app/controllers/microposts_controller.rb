@@ -1,5 +1,7 @@
 class MicropostsController < ApplicationController
 before_action :authenticate_user!,except: [:index,:show,:tagname]
+before_action :correct_user,only: [:edit,:update,:destroy]
+
   def index
     @microposts = Micropost.all
     # render json: @microposts, status: 422
@@ -46,9 +48,10 @@ before_action :authenticate_user!,except: [:index,:show,:tagname]
 
   def destroy
     @micropost = Micropost.find(params[:id])
+    @user = @micropost.user
     @micropost.destroy
     flash[:success] = "投稿が削除されました"
-    redirect_to root_path
+    redirect_to users_show_path(@user)
   end
 
   def tagname
@@ -61,6 +64,11 @@ private
 
   def micropost_params
     params.require(:micropost).permit(:content,:anonymous)
+  end
+
+  def correct_user
+    @micropost = Micropost.find(params[:id])
+    redirect_to root_path if @micropost.user_id != current_user.id && !current_user.admin?
   end
 
 end

@@ -11,7 +11,8 @@ devise_scope :user do
   get '/users/password', to: 'users/passwords#new'
 end
 
-get 'users/show', to: 'users#show'
+get 'users/index', to: 'users#index'
+get 'users/:id', to: 'users#show', as: 'users_show'
 get 'pages/home', to: 'pages#home'
 resources :microposts do
   resources :comments, only: [:create]
