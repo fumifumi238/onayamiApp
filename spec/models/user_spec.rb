@@ -22,9 +22,9 @@ RSpec.describe User, type: :model do
      end
    end
 
-  context 'when name is nil' do
+  context 'when name is longer than 20' do
     let(:name){"aiueo"*5}
-     it 'is invalid without a name' do
+     it 'is too long' do
        user.valid?
        expect(user.errors[:name]).to include("は20文字以内で入力してください")
      end
