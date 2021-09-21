@@ -1,18 +1,15 @@
 require 'rails_helper'
-# validates :name, invalid_words: true, presence: true, length: { maximum: 20 }
+
 RSpec.describe User, type: :model do
 
   it 'is valid with a name, email, and password' do
-  user = User.new(name: "Tester",
-     email:      "tester@example.com",
-     password:   "dottle-nouveau-pavilion-tights-furze")
+    user = FactoryBot.build(:user)
     expect(user).to be_valid
   end
 
-  # 名がなければ無効な状態であること
+
   describe 'name test' do
-   let(:user){User.new(params)}
-   let(:params){{name: name, email: "tester@example.com",password: "password",}}
+  let(:user){FactoryBot.build(:user,name: name)}
 
    context 'when name is nil' do
     let(:name){nil}
@@ -23,10 +20,18 @@ RSpec.describe User, type: :model do
    end
 
   context 'when name is longer than 20' do
-    let(:name){"aiueo"*5}
+    let(:name){"a"*21}
      it 'is too long' do
        user.valid?
        expect(user.errors[:name]).to include("は20文字以内で入力してください")
+     end
+   end
+
+  context 'when name is within 20 words' do
+    let(:name){"a"*20}
+     it 'is valid with name' do
+       user.valid?
+       expect(user.errors[:name]).to be_empty
      end
    end
 
@@ -40,7 +45,7 @@ RSpec.describe User, type: :model do
    end
 
   context 'when name contains 5 consecutive characters' do
-    let(:name) {"あああああ"}
+    let(:name) {"あ"*5}
     it 'is invalid with 5 consecutive characters' do
        user.valid?
        expect(user.errors[:contain_invalid_regex]).to include(": url,htmlタグ,5文字以上の連続した単語は使えません。")
@@ -70,9 +75,9 @@ RSpec.describe User, type: :model do
 
 
  describe 'email test' do
-    let!(:created_user){User.create(name: "Tester",email: "tester@example.com",password: "password")}
-    let(:user){User.new(params)}
-    let(:params){{name: "Tester",email: email,password: "password"}}
+    let!(:created_user){FactoryBot.create(:user,email: "tester@example.com")}
+    let(:user){FactoryBot.build(:user,email: email)}
+
 
     context 'duplicate email' do
       let(:email){ "tester@example.com"}

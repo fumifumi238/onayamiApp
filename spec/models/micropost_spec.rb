@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe Micropost, type: :model do
 
 describe 'content test' do
-  let(:micropost){Micropost.new(params)}
-  let(:params){{content: content}}
+  let(:micropost){FactoryBot.build(:micropost,content: content)}
+
 
   context 'when content or user_id is nil' do
    let(:content){nil}
@@ -13,17 +13,26 @@ describe 'content test' do
       expect(micropost.errors[:content]).to include("を入力してください")
     end
 
-   it 'is invalid without a content' do
+   it 'is invalid without a user' do
+      micropost.user = nil
       micropost.valid?
       expect(micropost.errors[:user]).to include("を入力してください")
     end
   end
 
-  context 'when content is nil' do
-   let(:content){"aiueo"*201}
+  context 'when content is too long' do
+   let(:content){"a"*1001}
     it 'is invalid without a content' do
       micropost.valid?
       expect(micropost.errors[:content]).to include("は1000文字以内で入力してください")
+    end
+  end
+
+  context 'when content is within 1000 words' do
+   let(:content){"a"*1000}
+    it 'is valid with a content' do
+      micropost.valid?
+      expect(micropost.errors[:content]).to be_empty
     end
   end
 
@@ -37,7 +46,7 @@ describe 'content test' do
   end
 
   context 'when content contains 5 consecutive characters' do
-   let(:content) {"あああああ"}
+   let(:content) {"あ"*5}
    it 'is invalid with 5 consecutive characters' do
       micropost.valid?
       expect(micropost.errors[:contain_invalid_regex]).to include(": url,htmlタグ,5文字以上の連続した単語は使えません。")
