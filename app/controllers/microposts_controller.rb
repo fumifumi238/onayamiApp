@@ -3,7 +3,8 @@ class MicropostsController < ApplicationController
   before_action :correct_user, only: %i[edit update destroy]
 
   def index
-    @microposts = Micropost.all
+    @microposts = Micropost.all.includes(:user)
+    # TODO いいね数のsqlを減らす
     # render json: @microposts, status: 422
   end
 
@@ -16,7 +17,7 @@ class MicropostsController < ApplicationController
     tag_list = params[:micropost][:tag_ids].split(',').uniq
     if @micropost.save && @micropost.save_tags(tag_list)
       flash[:success] = '投稿が完了しました'
-      redirect_to microposts_path
+      redirect_to root_path
     else
       flash.now[:danger] = '投稿に失敗しました'
       render 'new'
@@ -25,7 +26,7 @@ class MicropostsController < ApplicationController
 
   def show
     @micropost = Micropost.find(params[:id])
-    @comments = @micropost.comments
+    @comments = @micropost.comments.includes(:user)
     @comment = Comment.new
     #  debugger
   end
@@ -56,7 +57,7 @@ class MicropostsController < ApplicationController
 
   def tagname
     @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts
+    @microposts = @tag.microposts.includes(:user)
   end
 
   private
