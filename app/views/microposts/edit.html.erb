@@ -1,22 +1,21 @@
 <div class="container">
-<div class="text-center">
-<h1>投稿を編集する</h1>
-<%= render 'layouts/flash_messages' %>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with(model: @micropost) do |f| %>
-    <%= render 'layouts/error_messages', object: f.object %>
-  <div class="form-group">
-      <%= f.text_area :content, class: 'form-control',rows: "10"%></br>
+  <div class="text-center">
+    <h1>投稿を編集する</h1>
+    <%= render 'layouts/flash_messages' %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <%= form_with(model: @micropost) do |f| %>
+          <%= render 'layouts/error_messages', object: f.object %>
+          <div class="form-group">
+            <%= f.text_area :content, class: 'form-control',rows: "10"%></br>
+        </div>
+        <div class="form-group">
+          <%= f.label :tag_ids %>
+          <%= f.text_field :tag_ids, class: "form-control", id:'tag_ids', value: @tag_list, placeholder: "タグは「,」で区切ってください" %>
+        </div>
+        <%= f.submit "投稿する", class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
-  <div class="form-group">
-      <%= f.label :tag_ids %>
-      <%= f.text_field :tag_ids, class: "form-control", id:'tag_ids', value: @tag_list, placeholder: "タグは「,」で区切ってください" %>
-  </div>
-      <%= f.submit "投稿する", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
 </div>
 </div>
