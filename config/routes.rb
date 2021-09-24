@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   get 'users/index', to: 'users#index'
-  get 'users/:id', to: 'users#show', as: 'users_show'
+  get 'users/:id', to: 'users#show', as: 'show_users'
   get 'pages/home', to: 'pages#home'
   resources :microposts do
     resources :comments, only: [:create]
