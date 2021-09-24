@@ -55,7 +55,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if current_user.admin?
       users_index_path
     else
-      users_show_path(current_user)
+      show_users_path(current_user)
     end
   end
 

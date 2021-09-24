@@ -8,7 +8,7 @@
 いいね数:<%= @micropost.likes.count%>
 <% if user_signed_in? && @micropost.user_id == current_user.id %>
   <%= link_to "編集する",edit_micropost_path(@micropost) %>
-  <%= link_to "削除する", @micropost, method: :delete,
+  <%= link_to "削除する", @micropost, method: :delete,id: 'delete_button',
                                   data: { confirm: "本当に削除しますか?" } %>
 <% end %>
 

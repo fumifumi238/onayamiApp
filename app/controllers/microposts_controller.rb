@@ -52,7 +52,7 @@ class MicropostsController < ApplicationController
     @user = @micropost.user
     @micropost.destroy
     flash[:success] = '投稿が削除されました'
-    redirect_to users_show_path(@user)
+    redirect_to show_users_path(@user)
   end
 
   def tagname

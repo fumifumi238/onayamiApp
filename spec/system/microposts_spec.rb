@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Microposts', type: :system do
   let(:user) { FactoryBot.create(:user) }
-  let!(:micropost) { FactoryBot.create(:micropost) }
+  let!(:micropost) { FactoryBot.create(:micropost,user: user) }
   it 'creates a new micropost' do
     sign_in_as user
     visit new_micropost_path
@@ -10,6 +10,25 @@ RSpec.describe 'Microposts', type: :system do
     click_button '投稿する'
     expect(page).to have_current_path root_path
     expect(page).to have_content 'test'
+  end
+
+  it 'edits a micropost' do
+    sign_in_as user
+    visit micropost_path(micropost)
+    click_link '編集する'
+    fill_in 'content', with: '編集しました'
+    click_button '投稿する'
+    expect(page).to have_current_path root_path
+    expect(page).to have_content '編集しました'
+  end
+
+  it 'deletes a micropost', js: true do
+    sign_in_as user
+    visit micropost_path(micropost)
+    click_link '削除する'
+    page.accept_confirm
+    expect(page).to have_current_path show_users_path(user)
+    expect(page).not_to have_content micropost.content
   end
 
   it 'likes a micropost' do
@@ -31,5 +50,5 @@ RSpec.describe 'Microposts', type: :system do
     expect(page).to have_current_path micropost_path(micropost)
     expect(page).to have_content 'コメント'
   end
-  
+
 end
