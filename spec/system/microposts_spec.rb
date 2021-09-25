@@ -12,6 +12,7 @@ RSpec.describe 'Microposts', type: :system do
     expect(page).to have_content 'test'
   end
 
+
   it 'edits a micropost' do
     sign_in_as user
     visit micropost_path(micropost)
@@ -29,6 +30,32 @@ RSpec.describe 'Microposts', type: :system do
     page.accept_confirm
     expect(page).to have_current_path show_users_path(user)
     expect(page).not_to have_content micropost.content
+  end
+
+  it 'creates and edits tags' do
+    sign_in_as user
+    visit new_micropost_path
+    fill_in '悩みを投稿してみましょう', with: 'create_tag'
+    fill_in 'タグは「,」で区切ってください', with: 'タグ1,タグ2'
+    click_button '投稿する'
+    click_link 'create_tag'
+    expect(page).to have_selector '.badge', text: 'タグ1'
+    expect(page).to have_selector '.badge', text: 'タグ2'
+    click_link '編集する'
+    fill_in 'タグは「,」で区切ってください', with: 'タグ1,タグ3'
+    click_button '投稿する'
+    click_link 'create_tag'
+    expect(page).to have_selector '.badge', text: 'タグ1'
+    expect(page).to have_selector '.badge', text: "タグ3"
+  end
+
+  it 'checks a anonymous' do
+    sign_in_as user
+    visit new_micropost_path
+    fill_in '悩みを投稿してみましょう', with: '匿名投稿'
+    check 'micropost_anonymous'
+    click_button '投稿する'
+    expect(page).to have_content "匿名希望　さん"
   end
 
   it 'likes a micropost' do
