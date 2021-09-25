@@ -91,6 +91,7 @@ GEM
       sassc (>= 2.0.0)
     bootstrap-will_paginate (1.0.0)
       will_paginate
+    brakeman (5.1.1)
     builder (3.2.4)
     bullet (6.1.5)
       activesupport (>= 3.0.0)
@@ -155,11 +156,13 @@ GEM
     method_source (1.0.0)
     mini_magick (4.9.5)
     mini_mime (1.1.1)
+    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     mysql2 (0.5.3)
     nio4r (2.5.8)
-    nokogiri (1.12.4-x86_64-linux)
+    nokogiri (1.12.4)
+      mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     public_suffix (4.0.6)
@@ -295,6 +298,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   bootstrap-sass (= 3.4.1)
   bootstrap-will_paginate (= 1.0.0)
+  brakeman
   bullet
   byebug
   capybara (>= 3.26)

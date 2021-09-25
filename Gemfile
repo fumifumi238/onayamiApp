@@ -63,6 +63,8 @@ group :development do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'bullet'
+  # 貧弱性を見つけるgem
+  gem 'brakeman'
 end
 
 group :test do

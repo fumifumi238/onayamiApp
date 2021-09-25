@@ -1,25 +1,58 @@
 require 'rails_helper'
 
+# todo adminのテスト
 RSpec.describe 'Users', type: :system do
-  let(:user) { FactoryBot.create(:user) }
-  it 'login and logout' do
-    sign_in_as user
-    expect(page).to have_current_path "/users/#{user.id}"
-    click_link 'ログアウト'
+
+  describe "user" do
+    let(:user) { FactoryBot.create(:user) }
+    it 'logged in as a user' do
+      sign_in_as user
+      expect(page).to have_current_path "/users/#{user.id}"
+      click_link 'ログアウト'
+    end
+
+    it 'edits  a user ' do
+      sign_in_as user
+      visit show_users_path(user)
+      click_link 'アカウント編集'
+      fill_in 'ユーザー名', with: 'foo'
+      fill_in 'パスワード', with: 'foobarbaz'
+      fill_in 'パスワード（確認用）', with: 'foobarbaz'
+      fill_in '現在のパスワード', with: user.password
+      click_button '更新'
+      expect(page).to have_current_path root_path
+    end
+
   end
 
-  it 'edit user ' do
-    sign_in_as user
-    visit users_show_path(user.id)
-    click_link 'アカウント編集'
-    fill_in 'ユーザー名', with: 'foo'
-    fill_in 'パスワード', with: 'foobarbaz'
-    fill_in 'パスワード（確認用）', with: 'foobarbaz'
-    fill_in '現在のパスワード', with: user.password
-    click_button '更新'
-    expect(page).to have_current_path root_path
+  describe "admin" do
+    let(:admin) {FactoryBot.create(:user,:admin) }
+    let!(:user) {FactoryBot.create(:user)}
+    let!(:micropost){FactoryBot.create(:micropost,user: user)}
+
+    before do
+      sign_in_as admin
+    end
+
+    it "logged in as an admin" do
+      expect(page).to have_current_path users_index_path
+      click_link 'ログアウト'
+    end
+
+    it "deletes other people's micropost if admin",js: true do
+      expect(page).to have_current_path users_index_path
+      expect(page).to have_content user.name
+      click_link user.name
+      click_link '削除する'
+      page.accept_confirm
+    end
+
+
   end
+
+
 end
+
 
 # 1 # 全種類の HTML 要素を扱う
 # 2 it "works with all kinds of HTML elements" do
