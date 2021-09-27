@@ -1,23 +1,31 @@
 <template>
   <div id="app">
-    <p>{{ message }}</p>
+    <ul>
+      <li v-for="micropost in microposts" :key="micropost.id">
+            <p>{{micropost.content}}</p>
+            <p>{{micropost.name}}　さん</p>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data: function () {
     return {
-      message: count,
+      microposts: []
     }
+  },
+  mounted: function(){
+    axios
+      .get('/api/microposts')
+      .then(response => (this.microposts = response.data))
   }
 }
 </script>
 
 <style scoped>
-p {
-  color: red;
-  font-size: 2em;
-  text-align: center;
-}
+
 </style>

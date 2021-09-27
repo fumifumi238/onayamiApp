@@ -57,7 +57,7 @@ class MicropostsController < ApplicationController
 
   def tagname
     @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts.includes(:user)
+    @microposts = @tag.microposts
   end
 
   private
@@ -70,4 +70,5 @@ class MicropostsController < ApplicationController
       @micropost = Micropost.find(params[:id])
       redirect_to root_path if @micropost.user_id != current_user.id && !current_user.admin?
     end
+    
 end
