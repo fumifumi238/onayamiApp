@@ -18,7 +18,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
     resource :likes, only: %i[create destroy]
   end
+
   get 'microposts/:id/comments', to: 'microposts#show'
   get 'microposts/tag/:tagname', to: 'microposts#tagname', as: 'tagname'
+  
+  namespace :api, {format: 'json'} do
+    resources :microposts, only: [:index, :show]
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
