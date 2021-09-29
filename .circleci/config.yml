@@ -42,6 +42,7 @@ jobs:
         command: |
            bundle exec rake db:create
            bundle exec rake db:schema:load
+    - run: yarn add @fortawesome/fontawesome-free
 
     # run tests!
     - run:
