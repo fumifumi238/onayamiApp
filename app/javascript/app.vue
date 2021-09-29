@@ -3,7 +3,8 @@
     <ul>
       <li v-for="micropost in microposts" :key="micropost.id">
             <p>{{micropost.content}}</p>
-            <p>{{micropost.name}}　さん</p>
+            <p>{{micropost.user_name}}　さん</p>
+            <p>いいね数:{{micropost.likes_count}}</p>
       </li>
     </ul>
   </div>

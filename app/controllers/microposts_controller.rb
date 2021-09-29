@@ -3,8 +3,8 @@ class MicropostsController < ApplicationController
   before_action :correct_user, only: %i[edit update destroy]
 
   def index
-    @microposts = Micropost.all.includes(:user)
-    # TODO いいね数のsqlを減らす
+    @microposts = Micropost.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count').group(:id)
+    checked_anonymous?(@microposts)
     # render json: @microposts, status: 422
   end
 
@@ -70,5 +70,10 @@ class MicropostsController < ApplicationController
       @micropost = Micropost.find(params[:id])
       redirect_to root_path if @micropost.user_id != current_user.id && !current_user.admin?
     end
-    
+
+    def checked_anonymous?(microposts)
+        microposts.each do |micropost|
+        micropost.user_name = "匿名希望" if micropost.anonymous?
+    end
+  end
 end
