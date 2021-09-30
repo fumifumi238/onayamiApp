@@ -5,6 +5,7 @@
             <p>{{micropost.content}}</p>
             <p>{{micropost.user_name}}　さん</p>
             <p>いいね数:{{micropost.likes_count}}</p>
+            <i class="far fa-heart like-btn"></i>
       </li>
     </ul>
   </div>
