@@ -69,6 +69,21 @@ RSpec.describe 'Microposts', type: :system do
     expect(page).to have_css '.like-btn'
   end
 
+  it 'likes and delete a micropost',js: true do
+    sign_in_as user
+    visit root_path
+    click_link micropost.content
+    expect(page).to have_css '.like-btn'
+    click_link nil, href: micropost_likes_path(micropost)
+    expect(page).to have_css '.liked-btn'
+    click_link '削除する'
+    page.accept_confirm
+    expect(page).to have_current_path show_users_path(user)
+    expect(page).not_to have_content micropost.content
+  end
+
+
+
   it 'writes a comment' do
     sign_in_as user
     visit micropost_path(micropost)

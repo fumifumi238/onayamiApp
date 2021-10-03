@@ -1,59 +1,68 @@
-
 <%= render 'layouts/flash_messages' %>
-<%=safe_join(@micropost.content.split("\n"),tag(:br))%></br>
-タグ:
-<% @micropost.tags.each do |tag| %>
-  <%= link_to tag.name, tagname_path(tag.name),class:"badge bg-primary" %>
-<% end %>
-いいね数:<%= @micropost.likes.count%>
-<% if user_signed_in? && @micropost.user_id == current_user.id %>
-  <%= link_to "編集する",edit_micropost_path(@micropost) %>
-  <%= link_to "削除する", @micropost, method: :delete,id: 'delete_button',
-                                  data: { confirm: "本当に削除しますか?" } %>
-<% end %>
-
-<% if user_signed_in? %>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-  <% if current_user.already_liked?(@micropost) %>
-       <%= link_to micropost_likes_path(@micropost),id:"unlike", remote: true,method: :delete do %>
-         <i class="fas fa-heart liked-btn"></i>
-       <% end %>
+<div class="container">
+  <div class="content-box">
+  <%if @micropost.anonymous? %>
+  <h3>匿名希望　さん</h3>
   <% else %>
-      <%= link_to micropost_likes_path(@micropost),id:"like", remote: true ,method: :POST do %>
-        <i class="far fa-heart like-btn"></i>
-      <% end %>
+  <h3><%=@micropost.user.name %>　さん</h3>
   <% end %>
-
-    <%= form_with(model:[@micropost, @comment], method: :post) do |f| %>
-    <%= render 'layouts/error_messages', object: f.object %>
-  <div class="form-group">
-      <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
+    <p class="break-word"><%=safe_join(@micropost.content.split("\n"),tag(:br))%></p>
+    <div>
+      <% @micropost.tags.each do |tag| %>
+        <%= link_to tag.name, tagname_path(tag.name),class:"badge bg-primary" %>
+      <% end %>
+    </div>
+    <div class="text-right">
+      <div>
+        <% if user_signed_in?%>
+          <% if current_user.already_liked?(@micropost) %>
+            <%= link_to micropost_likes_path(@micropost),id:"unlike", remote: true,method: :delete do %>
+              <i class="fas fa-heart liked-btn"></i>
+            <% end %>
+          <% else %>
+            <%= link_to micropost_likes_path(@micropost),id:"like", remote: true ,method: :POST do %>
+              <i class="far fa-heart like-btn"></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div>
+          いいね数:<%= @micropost.likes.count%>
+        </div>
+        <% if @micropost.user_id == current_user.id %>
+          <%= link_to "編集する",edit_micropost_path(@micropost) %>
+          <%= link_to "削除する", @micropost, method: :delete,id: 'delete_button',
+                                  data: { confirm: "本当に削除しますか?" } %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-
-  <div class="form-group">
-      <%= f.hidden_field :micropost_id, value: @micropost.id %></br>
   </div>
-
-  <%= f.submit "コメントする", class: "btn btn-primary" %>
+  <% if user_signed_in? %>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <%= form_with(model:[@micropost, @comment], method: :post) do |f| %>
+          <%= render 'layouts/error_messages', object: f.object %>
+          <div class="form-group">
+            <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
+        </div>
+          <%= f.hidden_field :micropost_id, value: @micropost.id %>
+      <div class="text-center">
+        <%= f.submit "コメントする", class: "btn btn-primary" %>
+      </div>
     <% end %>
-
-<% else %>
-    <p>コメントするにはログインしてください</p>
+  <% else %>
+    <p class="text-center">コメントするにはログインしてください</p>
+  <% end %>
+  <h2 class="text-center">コメント一覧</h2>
+  <% if @comments.length == 0%>
+    <p class="text-center">コメントはまだありません</p>
+  <% end %>
+  <% @comments.each do |comment|%>
+    <% if comment.user_id == @micropost.user_id && @micropost.anonymous? %>
+      匿名希望さん
+    <% else%>
+      <%= comment.user.name %>
+    <% end %>
+     <p class="break-word"><%= comment.content %></p></br>
 <% end %>
-
-
-<h2>コメント一覧</h2>
-<% if @comments.length == 0%>
-  <p>コメントはまだありません</p>
-<% end %>
-<% @comments.each do |comment|%>
-
-<% if comment.user_id == @micropost.user_id && @micropost.anonymous? %>
-  匿名希望さん
-<% else%>
-  <%= comment.user.name %>
-<% end %>
-
-  <%= comment.content %></br>
-<% end %>
+</div>
