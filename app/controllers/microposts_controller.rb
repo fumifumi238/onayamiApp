@@ -26,7 +26,7 @@ class MicropostsController < ApplicationController
 
   def show
     @micropost = Micropost.find(params[:id])
-    @comments = @micropost.comments.includes(:user)
+    @comments = @micropost.comments
     @comment = Comment.new
     #  debugger
   end

@@ -3,7 +3,7 @@ class Micropost < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
   validates :content, presence: true, invalid_words: true, length: { maximum: 1000 }
   has_many :comments, dependent: :destroy
-  has_many :likes
+  has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
   has_many  :tag_relationships, dependent: :destroy
   has_many  :tags, through: :tag_relationships

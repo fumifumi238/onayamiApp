@@ -14,19 +14,18 @@
  *= require_self
  */
 
-@import '@fortawesome/fontawesome-free/scss/fontawesome';
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
-
 
 body {
   padding-top: 60px;
 }
 
-li{
+li {
   list-style: none;
 }
- // max-width
+// max-width
 
 .mw-md {
   max-width: 576px;
@@ -60,10 +59,42 @@ li{
   }
 }
 
-.like-btn{
-  color:#c6c6c6;
+.like-btn {
+  color: #c6c6c6;
 }
 
-.liked-btn{
-  color: #FF0000;
+.liked-btn {
+  color: #ff0000;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.box {
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-weight: bold;
+  color: #d36090; /*文字色*/
+  background: #fff;
+  border: solid 3px #60d386; /*線*/
+  border-radius: 10px; /*角の丸み*/
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.content-box{
+    padding: 0.5em 2em;
+    margin: 2em auto;
+    color: #5d627b;
+    background: white;
+    border-top: solid 5px #5d627b;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+    width: 50%;
+}
+
+.break-word{
+    word-wrap: break-word;
 }
