@@ -6,3 +6,4 @@
   <p class="text-right"><%= micropost.user_name %>　さん　 いいね数 : <%= micropost.likes_count %></p>
 </div>
 <% end %>
+<%= paginate @microposts %>
