@@ -6,7 +6,7 @@
   <% end %>
   <h1>自分の投稿</h1>
   <% @microposts.each do |micropost|%>
-    <%= link_to micropost.content,micropost %>   <%= link_to "削除する", micropost, method: :delete,
+    <%= link_to truncate(micropost.content,length:100),micropost %>   <%= link_to "削除する", micropost, method: :delete,
                                   data: { confirm: "本当に削除しますか?" } %></br>
 <% end %>
 <h1>いいねした投稿</h1>
