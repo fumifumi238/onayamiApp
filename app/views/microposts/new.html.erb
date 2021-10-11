@@ -7,7 +7,9 @@
     <%= form_with(model: @micropost) do |f| %>
  <%= render 'layouts/error_messages', object: f.object %>
   <div class="form-group">
-      <%= f.text_area :content, placeholder: "悩みを投稿してみましょう", class: 'form-control  content-count',rows: "10"%></br>
+      <div id="count">
+      <%= f.text_area :content, placeholder: "悩みを投稿してみましょう", class: 'form-control  content-count',rows: "10" %></br>
+      </div>
   </div>
 
   <div class="form-group">

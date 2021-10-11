@@ -3,7 +3,9 @@ class MicropostsController < ApplicationController
   before_action :correct_user, only: %i[edit update destroy]
 
   def index
-    @microposts = Micropost.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count').group(:id)
+    @microposts = Micropost.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count')
+    .group(:id).page(params[:page]).per(10)
+
     checked_anonymous?(@microposts)
     # render json: @microposts, status: 422
   end
@@ -57,7 +59,8 @@ class MicropostsController < ApplicationController
 
   def tagname
     @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count').group(:id)
+    @microposts = @tag.microposts.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count')
+    .group(:id)
   end
 
   private
@@ -75,5 +78,6 @@ class MicropostsController < ApplicationController
         microposts.each do |micropost|
         micropost.user_name = "匿名希望" if micropost.anonymous?
     end
+
   end
 end

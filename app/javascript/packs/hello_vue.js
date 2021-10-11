@@ -12,11 +12,12 @@ import TurbolinksAdapter from 'vue-turbolinks';
 Vue.use(TurbolinksAdapter);
 
 document.addEventListener('turbolinks:load', () => {
-  const app = new Vue({
-    render: h => h(App)
-  }).$mount()
- document.body.appendChild(app.$el)
-  console.log(app)
+   if (document.getElementById('hello')){
+     new Vue({
+       el: '#hello',
+       components: { App }
+     })
+   }
 })
 // The above code uses Vue without the compiler, which means you cannot
 // use Vue to target elements in your existing html templates. You would
