@@ -26,7 +26,7 @@ class MicropostsController < ApplicationController
 
   def show
     @micropost = Micropost.find(params[:id])
-    @comments = @micropost.comments
+    @comments = @micropost.comments.includes(:user)
     @comment = Comment.new
     #  debugger
   end
@@ -57,7 +57,7 @@ class MicropostsController < ApplicationController
 
   def tagname
     @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts
+    @microposts = @tag.microposts.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count').group(:id)
   end
 
   private

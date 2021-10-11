@@ -5,6 +5,8 @@ class Api::MicropostsController < ApplicationController
     checked_anonymous?(@microposts)
   end
 
+
+
 private
   def checked_anonymous?(microposts)
     microposts.each do |micropost|

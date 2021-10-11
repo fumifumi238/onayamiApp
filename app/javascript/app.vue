@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h2>ああえ</h2>
     <ul>
       <li v-for="micropost in microposts" :key="micropost.id">
         <div class="box1">

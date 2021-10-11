@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     @micropost = Micropost.find(params[:micropost_id])
-    @comments = @micropost.comments
+    @comments = @micropost.comments.includes(:user)
     # render json: @comment
     if @comment.save
       flash[:success] = 'コメントしました'

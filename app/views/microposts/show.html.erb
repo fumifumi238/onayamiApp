@@ -1,11 +1,12 @@
+
 <%= render 'layouts/flash_messages' %>
 <div class="container">
   <div class="content-box">
-  <%if @micropost.anonymous? %>
-  <h3>匿名希望　さん</h3>
-  <% else %>
-  <h3><%=@micropost.user.name %>　さん</h3>
-  <% end %>
+    <%if @micropost.anonymous? %>
+      <h3>匿名希望　さん</h3>
+    <% else %>
+      <h3><%=@micropost.user.name %>　さん</h3>
+    <% end %>
     <p class="break-word"><%=safe_join(@micropost.content.split("\n"),tag(:br))%></p>
     <div>
       <% @micropost.tags.each do |tag| %>
@@ -15,27 +16,17 @@
     <div class="text-right">
       <div>
         <% if user_signed_in?%>
-          <% if current_user.already_liked?(@micropost) %>
-            <%= link_to micropost_likes_path(@micropost),id:"unlike", remote: true,method: :delete do %>
-              <i class="fas fa-heart liked-btn"></i>
-            <% end %>
-          <% else %>
-            <%= link_to micropost_likes_path(@micropost),id:"like", remote: true ,method: :POST do %>
-              <i class="far fa-heart like-btn"></i>
-            <% end %>
-          <% end %>
-        </div>
-        <div>
-          いいね数:<%= @micropost.likes.count%>
-        </div>
-        <% if @micropost.user_id == current_user.id %>
-          <%= link_to "編集する",edit_micropost_path(@micropost) %>
-          <%= link_to "削除する", @micropost, method: :delete,id: 'delete_button',
+          <div id="like">
+            <like-button :user-id="<%= current_user.id %>" :micropost-id="<%= @micropost.id %>"></like-button>
+          </div>
+          <% if @micropost.user_id == current_user.id %>
+            <%= link_to "編集する",edit_micropost_path(@micropost) %>
+            <%= link_to "削除する", @micropost, method: :delete,id: 'delete_button',
                                   data: { confirm: "本当に削除しますか?" } %>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
-  </div>
   </div>
   <% if user_signed_in? %>
     <div class="row">
@@ -45,24 +36,25 @@
           <div class="form-group">
             <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
         </div>
-          <%= f.hidden_field :micropost_id, value: @micropost.id %>
-      <div class="text-center">
-        <%= f.submit "コメントする", class: "btn btn-primary" %>
-      </div>
+        <%= f.hidden_field :micropost_id, value: @micropost.id %>
+        <div class="text-center">
+          <%= f.submit "コメントする", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-center">コメントするにはログインしてください</p>
     <% end %>
-  <% else %>
-    <p class="text-center">コメントするにはログインしてください</p>
-  <% end %>
-  <h2 class="text-center">コメント一覧</h2>
-  <% if @comments.length == 0%>
-    <p class="text-center">コメントはまだありません</p>
-  <% end %>
-  <% @comments.each do |comment|%>
-    <% if comment.user_id == @micropost.user_id && @micropost.anonymous? %>
-      匿名希望さん
-    <% else%>
-      <%= comment.user.name %>
+    <h2 class="text-center">コメント一覧</h2>
+    <% if @comments.length == 0%>
+      <p class="text-center">コメントはまだありません</p>
     <% end %>
-     <p class="break-word"><%= comment.content %></p></br>
-<% end %>
+    <% @comments.each do |comment|%>
+      <% if comment.user_id == @micropost.user_id && @micropost.anonymous? %>
+        匿名希望さん
+      <% else%>
+        <%= comment.user.name %>
+      <% end %>
+      <p class="break-word"><%= comment.content %></p>
+    </br>
+  <% end %>
 </div>

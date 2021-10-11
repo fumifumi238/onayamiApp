@@ -1,8 +1,8 @@
 
 <%= render 'layouts/flash_messages' %>
 <% @microposts.each do |micropost| %>
-<div class="box overflow-hidden">
-  <p><%= link_to micropost.content,micropost %></p>
+<div class="box">
+  <p><%= link_to truncate(micropost.content,length:100),micropost %></p>
   <p class="text-right"><%= micropost.user_name %>　さん　 いいね数 : <%= micropost.likes_count %></p>
 </div>
 <% end %>

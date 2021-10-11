@@ -1,10 +1,8 @@
 <%= render 'layouts/flash_messages' %>
-「<%= @tag.name %>」のタグがついた投稿
+<h2>「<%= @tag.name %>」のタグがついた投稿</h2>
 <% @microposts.each do |micropost| %>
-<% if micropost.anonymous? %>
-  <p>匿名希望　さん</p>
-<% else %>
-  <p><%= micropost.user.name %>　さん</p>
-<% end %>
-<p><%= link_to truncate(micropost.content,length:100),micropost %> いいね数 : <%= micropost.likes.count %></p></br>
+<div class="box">
+  <p><%= link_to truncate(micropost.content,length:100),micropost %></p>
+  <p class="text-right"><%= micropost.user_name %>　さん　 いいね数 : <%= micropost.likes_count %></p>
+</div>
 <% end %>
