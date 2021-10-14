@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   }
   devise_scope :user do
-    get "/users", to: "users/registrations#new"
+    get '/users', to: "users/registrations#new"
     get "/users/password", to: "users/passwords#new"
     get "/users/sign_out" => "devise/sessions#destroy"
   end
