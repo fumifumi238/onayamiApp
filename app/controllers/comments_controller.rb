@@ -5,15 +5,14 @@ class CommentsController < ApplicationController
     @comments = @micropost.comments.includes(:user)
     # render json: @comment
     if @comment.save
-      flash[:success] = 'コメントしました'
+      flash[:success] = "コメントしました"
       redirect_to micropost_path(@micropost)
     else
-      render 'microposts/show'
+      render "microposts/show"
     end
   end
 
   private
-
     def comment_params
       params.require(:comment).permit(:content, :micropost_id)
     end
