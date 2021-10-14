@@ -3,7 +3,7 @@ class MicropostsController < ApplicationController
   before_action :correct_user, only: %i[edit update destroy]
 
   def index
-    @microposts = Micropost.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count')
+    @microposts = Micropost.left_joins(:likes, :user).select("users.name as user_name ,microposts.*, count(likes.id) as likes_count")
     .group(:id).page(params[:page]).per(10)
 
     checked_anonymous?(@microposts)
@@ -16,13 +16,13 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
-    tag_list = params[:micropost][:tag_ids].split(',').uniq
+    tag_list = params[:micropost][:tag_ids].split(",").uniq
     if @micropost.save && @micropost.save_tags(tag_list)
-      flash[:success] = '投稿が完了しました'
+      flash[:success] = "投稿が完了しました"
       redirect_to root_path
     else
-      flash.now[:danger] = '投稿に失敗しました'
-      render 'new'
+      flash.now[:danger] = "投稿に失敗しました"
+      render "new"
     end
   end
 
@@ -35,17 +35,17 @@ class MicropostsController < ApplicationController
 
   def edit
     @micropost = Micropost.find(params[:id])
-    @tag_list = @micropost.tags.pluck(:name).join(',')
+    @tag_list = @micropost.tags.pluck(:name).join(",")
   end
 
   def update
     @micropost = Micropost.find(params[:id])
-    tag_list = params[:micropost][:tag_ids].split(',').uniq
+    tag_list = params[:micropost][:tag_ids].split(",").uniq
     if @micropost.update(micropost_params) && @micropost.save_tags(tag_list)
-      flash[:success] = '投稿が編集されました'
+      flash[:success] = "投稿が編集されました"
       redirect_to root_path
     else
-      render 'edit'
+      render "edit"
     end
   end
 
@@ -53,18 +53,17 @@ class MicropostsController < ApplicationController
     @micropost = Micropost.find(params[:id])
     @user = @micropost.user
     @micropost.destroy
-    flash[:success] = '投稿が削除されました'
+    flash[:success] = "投稿が削除されました"
     redirect_to show_users_path(@user)
   end
 
   def tagname
     @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts.left_joins(:likes,:user).select('users.name as user_name ,microposts.*, count(likes.id) as likes_count')
+    @microposts = @tag.microposts.left_joins(:likes, :user).select("users.name as user_name ,microposts.*, count(likes.id) as likes_count")
     .group(:id)
   end
 
   private
-
     def micropost_params
       params.require(:micropost).permit(:content, :anonymous)
     end
@@ -75,9 +74,8 @@ class MicropostsController < ApplicationController
     end
 
     def checked_anonymous?(microposts)
-        microposts.each do |micropost|
-        micropost.user_name = "匿名希望" if micropost.anonymous?
-    end
-
+      microposts.each do |micropost|
+    micropost.user_name = "匿名希望" if micropost.anonymous?
+  end
   end
 end

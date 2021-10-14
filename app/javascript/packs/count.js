@@ -1,14 +1,18 @@
-import Vue from 'vue/dist/vue.esm'
-import Count from '../components/WordCount.vue'
-import TurbolinksAdapter from 'vue-turbolinks';
-
-Vue.use(TurbolinksAdapter);
-
 document.addEventListener('turbolinks:load', () => {
-   if (document.getElementById('count')){
-     new Vue({
-       el: '#count',
-       components: { Count }
-     })
-   }
+  if(document.getElementById('content')){
+  console.log("a")
+    const content = document.getElementById('content');
+    let count = 1000 - content.value.length;
+    const counter = document.getElementById('counter');
+    counter.textContent = `残り: ${count}文字`;
+
+    content.addEventListener('keyup',()=>{
+      count = 1000 - content.value.length
+      counter.textContent = `残り: ${count}文字`;
+      if(count < 0){
+        counter.classList.add('text-danger')
+      }
+    })
+  }
+
 })

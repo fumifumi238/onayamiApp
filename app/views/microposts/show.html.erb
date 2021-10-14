@@ -34,7 +34,9 @@
         <%= form_with(model:[@micropost, @comment], method: :post) do |f| %>
           <%= render 'layouts/error_messages', object: f.object %>
           <div class="form-group">
-            <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',rows: "10"%></br>
+            <%= f.text_area :content,placeholder: "コメントしてみましょう", class: 'form-control',id:"content",rows: "10"%></br>
+                    <div id="counter" class="text-right">
+        </div>
         </div>
         <%= f.hidden_field :micropost_id, value: @micropost.id %>
         <div class="text-center">
