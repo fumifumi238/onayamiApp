@@ -3,8 +3,11 @@ class MicropostsController < ApplicationController
   before_action :correct_user, only: %i[edit update destroy]
 
   def index
-    @microposts = Micropost.left_joins(:likes, :user).select("users.name as user_name ,microposts.*, count(likes.id) as likes_count")
-    .group(:id).page(params[:page]).per(10)
+    @q  = Micropost.left_joins(:likes, :user).
+    select("users.name as user_name ,microposts.*, count(likes.id) as likes_count")
+    .group(:id).ransack(params[:q])
+
+    @microposts = @q.result.page(params[:page]).per(10)
 
     checked_anonymous?(@microposts)
     # render json: @microposts, status: 422
@@ -55,12 +58,6 @@ class MicropostsController < ApplicationController
     @micropost.destroy
     flash[:success] = "投稿が削除されました"
     redirect_to show_users_path(@user)
-  end
-
-  def tagname
-    @tag = Tag.find_by(name: params[:tagname])
-    @microposts = @tag.microposts.left_joins(:likes, :user).select("users.name as user_name ,microposts.*, count(likes.id) as likes_count")
-    .group(:id)
   end
 
   private
