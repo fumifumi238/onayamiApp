@@ -1,24 +1,103 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## morehelpについて
 
-Things you may want to cover:
+morehelpは誰でも簡単に悩み相談ができるアプリです。<br>
+名前を知られたくない投稿は匿名で投稿できます。
 
-* Ruby version
+## どうして作ったか
+私は心理学を専攻しており、どうすれば多くの人を助けれるかということを考えた際に、悩みを気軽に相談できる場所があればいいと思ったからです。<br>
+現状では、精神科や心療内科を予約しようと思っても2週間前後はかかることが多く、また、これらの施設に行くことに対してのハードルも高いと感じました。<br>
+ですので、このアプリは何らかの理由で相談するのが難しい人への心の支えになったら良いという思いから作成しました。
 
-* System dependencies
+## できること
+投稿機能（匿名も可）。コメント機能。いいね機能。検索機能。タグ機能。
 
-* Configuration
+## テーブル設計
 
-* Database creation
+## 使った技術
+* 言語
+  - Ruby(2.7.1), JavaScript
+* フレームワーク
+  - Ruby : Rails(6.1.4)
+  - JavaScript : Vue
+* DB
+  - MySQL(5.7)
+* OS
+  - Windows(wsl2でubuntu(18.04)を使用)
+* バージョン管理
+  - git,github
+* テスト
+  - Rspec,circleci
+* インフラ環境
+  - AWS,Docker
 
-* Database initialization
+## こだわった点
+- 不適切な言葉を投稿できないようにした。<br>
+  投稿をする際に不適切な言葉ばあると投稿できないようにしました。今回はvalidationに組み込みましたがcontrollerに書いて伏字にしても良かったかもしれません。
 
-* How to run the test suite
+- rubocop,rspec,bullet等のツールの導入<br>
+  前回作ったときには導入しなかった。テストツールやフォーマットツールを導入しました。またsqlの発行回数が多い場所があったのでテーブルの結合を使って参照回数を少なくしました。
 
-* Services (job queues, cache servers, search engines, etc.)
+- circleciの導入<br>
+  cicrcleciを用いてmainにmergeする際にrspecが走るようにしました。またcommit時にはrubocopを走らせ、無効なファイルはcommitしないようにしました。
+## 苦労した点
+- カスタムvalidatorの実装<br>
+  ベストな解決方法ではないかもしれないですが、urlやhtmlタグの埋め込み、不適切な言葉などの悪意のある投稿を防ぐ方法を模索しました。参考にできる記事も少なく、Gemも日本語に対応していなかったので、公式ドキュメントを見ながら実装しました。
 
-* Deployment instructions
+- Webpackerの導入<br>
+  erbを使いながらvueを使うことに苦労しました。どうやってデータを受け渡すか、erb側のidを参照するにはどうしたらいいかなどを仮説をたてながら実装しました。またvue-cliのバージョンによってはエラーがでることもあったので少しはまりました。
+## 改善したい点
+- デザインの改善<br>
+  バックエンドの処理に集中したいと思ったこととあまり良いデザインが思い浮かばなかったことからあまりこだわれていません。他のウェブサイトなどを参考に綺麗なレイアウトを考えたいです。
+- 通知機能を作る<br>
+  通知機能を作ってコメントされたら通知が行くようにしようと考えましたが、処理がフロント側によりそうだと考えたので、spaにする際に追加しようと考えました。
 
-* ...
+- インフラ関連を自分で考えて作りたい<br>
+  Dockerやcircleciは使えるが1人で0から書くことは難しいという状態なので、どのコマンドが必要でどのコマンドがいらないのかを考えて書いてみたいです。
+
+- フロントエンドとバックエンドを分けて書きたい</br>
+  コストの観点から、webpackerを導入して少しだけJavaScriptを導入しましたが、次はRailsはAPIモードにしてフロントとバックエンドを完全に分けたいです。
+
+## 使った教材
+* Ruby
+  - プロを目指す人のためのRuby入門
+  - Ruby on Rails 5 速習実践ガイド
+  - パーフェクト Ruby on Rails
+  - Everyday Rails - RSpecによるRailsテスト入門(webサイト)
+* JavaScript
+  - JavaScript本格入門
+  - 基礎からわかるVue.js
+  - 超Vue.js 2 完全パック(udemy)
+* AWS
+  - AWS cloudtech(webサイト)
+  - AWS認定　ソリューションアーキテクト
+* インフラ
+  - キタミ式　基本情報技術者
+  - プロになるためのWeb技術入門
+  - Webを支える技術
+  - マスタリング TCP IP
+  - Docker/kubernetes実践コンテナ開発入門(少しだけ)
+* SQL
+  - スッキリわかるSQL入門
+* Git
+  - もう怖くないGit(udemy)
+* linux
+  - linux標準教科書
+  - 新しいlinuxの教科書
+  - 本気で学ぶlinux実践入門(少しだけ)
+* セキュリティ
+  - 安全なWebアプリケーションの作り方
+* サービス
+  - progate
+  - ドットインストール(html,css,JavaScript)
+  - Paiza(Bランクまで)
+  - Recursion
+  など
+* その他
+  - リーダブルコード
+  - アジャイルサムライ
+  - リファクタリング
+## リンク
+
+# 最後に

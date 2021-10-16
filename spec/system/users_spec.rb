@@ -1,18 +1,21 @@
 require 'rails_helper'
 
-# todo adminのテスト
+
 RSpec.describe 'Users', type: :system do
 
   describe "user" do
     let(:user) { FactoryBot.create(:user) }
-    it 'logged in as a user' do
+
+    before do
       sign_in_as user
+    end
+
+    it 'logged in as a user' do
       expect(page).to have_current_path "/users/#{user.id}"
       click_link 'ログアウト'
     end
 
     it 'edits  a user ' do
-      sign_in_as user
       visit show_users_path(user)
       click_link 'アカウント編集'
       fill_in 'ユーザー名', with: 'foo'

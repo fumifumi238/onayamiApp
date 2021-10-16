@@ -14,7 +14,6 @@ Rails.application.routes.draw do
 
   get "users/index", to: "users#index"
   get "users/:id", to: "users#show", as: "show_users"
-  get "pages/home", to: "pages#home"
   resources :microposts do
     resources :comments, only: [:create]
     resource :likes, only: %i[create destroy]
