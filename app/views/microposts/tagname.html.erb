@@ -1,8 +1,0 @@
-<%= render 'layouts/flash_messages' %>
-<h2>「<%= @tag.name %>」のタグがついた投稿</h2>
-<% @microposts.each do |micropost| %>
-<div class="box">
-  <p><%= link_to truncate(micropost.content,length:100),micropost %></p>
-  <p class="text-right"><%= micropost.user_name %>　さん　 いいね数 : <%= micropost.likes_count %></p>
-</div>
-<% end %>

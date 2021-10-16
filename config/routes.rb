@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   end
 
   get "microposts/:id/comments", to: "microposts#show"
-  get "microposts/tag/:tagname", to: "microposts#tagname", as: "tagname"
 
   namespace :api, { format: "json" } do
     resources :microposts, only: [:index, :show]
