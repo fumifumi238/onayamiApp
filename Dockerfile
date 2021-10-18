@@ -5,6 +5,8 @@ RUN apt-get update -qq && \
   apt-get install -y build-essential \
   nodejs
 
+RUN apt-get install -y vim
+
 # yarnパッケージ管理ツールインストール
 RUN apt-get update && apt-get install -y curl apt-transport-https wget && \
   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
