@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <div v-if="isLiked" @click="deleteLike()" class="liked-btn">
-      <i class="far fa-heart"></i>
-    </div>
-    <div v-else @click="registerLike()" class="like-btn">
+  <div class="inline-blick">
+    <div v-if="isLiked" @click="deleteLike()">
+      <div class="liked-btn">
       <i class="fas fa-heart"></i>
+      </div>
+    </div>
+    <div v-else @click="registerLike()">
+      <div class="like-btn">
+      <i class="far fa-heart"></i>
+      </div>
     </div>
     <p>いいね数: {{ count }}</p>
   </div>
@@ -23,7 +27,7 @@ export default {
     }
   },
   computed: {
-   
+
     count() {
       return this.likeList.length
     },
@@ -78,12 +82,14 @@ export default {
 <style scoped>
 .like-btn{
   color: #c6c6c6;
-  display: inline-block;
 }
 
 .liked-btn {
   color: #ff0000;
-  display: inline-block;
+}
+
+.inline-block{
+ display: inline-block;
 }
 
 </style>
